@@ -29,7 +29,6 @@ HTMLWidgets.widget({
     function nodeSize(d) {
             if(options.nodesize){
                     return eval(options.radiusCalculation);
-
             }else{
                     return 6}
 
@@ -162,15 +161,25 @@ HTMLWidgets.widget({
       .enter().append("g")
       .attr("class", "node")
       .style("fill", function(d) { return color(d.group); })
+      //.style("fill", function(d) { return d.nodeCol; })
       .style("opacity", options.opacity)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
       .on("click", click)
       .call(drag);
 
+    //node.append("circle")
+      //.attr("r", function(d){return nodeSize(d);})
+      //.style("stroke", "#fff")
+      //.style("stroke", function(d) { return d.node_col; }) 
+      //.style("stroke", d => d.bait ? "#000": "#fff" )
+      //.style("stroke", "#000")
+      //.style("opacity", options.opacity)
+      //.style("stroke-width", "1.5px");
+      
     node.append("circle")
       .attr("r", function(d){return nodeSize(d);})
-      .style("stroke", "#fff")
+      .style("stroke", function(d) { return d.borderCol; })
       .style("opacity", options.opacity)
       .style("stroke-width", "1.5px");
 

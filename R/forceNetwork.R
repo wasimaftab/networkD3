@@ -57,6 +57,10 @@
 #' text when the mouse is not hovering over them.
 #' @param clickAction character string with a JavaScript expression to evaluate
 #' when a node is clicked.
+#' @param nodeBorders character vector specifying the colours you want the node borders
+#' to be. Multiple formats supported (e.g. hexadecimal)
+
+#' 
 #'
 #' @examples
 #' # Load data
@@ -169,7 +173,9 @@ forceNetwork <- function(Links,
                          arrows = FALSE,
                          bounded = FALSE,
                          opacityNoHover = 0,
-                         clickAction = NULL)
+                         clickAction = NULL,
+                         nodeBorderCol = '#000')
+
 {
     # Check if data is zero indexed
     check_zero(Links[, Source], Links[, Target])
@@ -203,14 +209,23 @@ forceNetwork <- function(Links,
             names(NodesDF) <- c("name", "group", "nodesize")
             nodesize = TRUE
     } else {
-            NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
-            names(NodesDF) <- c("name", "group")
+        # NodesDF <-
+        #     data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, bait], Nodes[, nodeBorderCol])
+        # names(NodesDF) <- c("name", "group", "bait", "borderCol")
+        NodesDF <-
+            data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, nodeBorderCol])
+        names(NodesDF) <- c("name", "group", "borderCol")
             nodesize = FALSE
     }
 
+    # browser()
     LinksDF <- data.frame(LinksDF, colour = linkColour)
     LinksDF$colour = as.character(LinksDF$colour)
+    
+    # NodesDF <- data.frame(NodesDF, colour = nodeBorderCol)
+    # NodesDF$colour = as.character(NodesDF$colour)
 
+    # browser()
     # create options
     options = list(
             NodeID = NodeID,
@@ -234,6 +249,7 @@ forceNetwork <- function(Links,
             clickAction = clickAction
     )
 
+    # browser()
     # create widget
     htmlwidgets::createWidget(
             name = "forceNetwork",
