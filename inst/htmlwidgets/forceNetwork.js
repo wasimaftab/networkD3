@@ -168,15 +168,6 @@ HTMLWidgets.widget({
       .on("click", click)
       .call(drag);
 
-    //node.append("circle")
-      //.attr("r", function(d){return nodeSize(d);})
-      //.style("stroke", "#fff")
-      //.style("stroke", function(d) { return d.node_col; }) 
-      //.style("stroke", d => d.bait ? "#000": "#fff" )
-      //.style("stroke", "#000")
-      //.style("opacity", options.opacity)
-      //.style("stroke-width", "1.5px");
-      
     node.append("circle")
       .attr("r", function(d){return nodeSize(d);})
       .style("stroke", function(d) { return d.borderCol; })
@@ -242,6 +233,7 @@ HTMLWidgets.widget({
       d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 13)
+        .style("fill", "#141414") //uncomment this line to make all node\'s text color to charcoal upon mouse hover
         .style("stroke-width", ".5px")
         .style("font", options.clickTextSize + "px ")
         .style("opacity", 1);
